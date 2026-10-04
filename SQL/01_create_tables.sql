@@ -1,4 +1,4 @@
-CREATE TABLE Customers(
+CREATE TABLE IF NOT EXIST customers(
     customer_id	INT	Primary Key,
     customer_name	VARCHAR2(100)	NOT NULL,
     email	VARCHAR2(100)	UNIQUE,
@@ -7,12 +7,12 @@ CREATE TABLE Customers(
 );    
 
 
-CREATE TABLE Accounts(
-    Account_id	INT	Primary Key,
-    Customer_id	INT	Foreign Key REFERENCES Customers(customer_id),
-    Account_type	VARCHAR2(20),	
-    Balance	INT(12,2),
-    Status	VARCHAR2(20)
+CREATE TABLE IF NOT EXIST accounts(
+    account_id	INT	Primary Key,
+    customer_id	INT	Foreign Key REFERENCES customers(customer_id),
+    account_type	VARCHAR2(20),	
+    balance	INT(12,2),
+    status	VARCHAR2(20)
 );
 
 
