@@ -27,15 +27,15 @@ BEGIN
     )
     INTO destination_flag; -- if found true; if not found false
 
-    IF destination_flag ==false THEN
-         raise exception "destination account not found provide valid account number";
+    IF destination_flag =false THEN
+         raise exception 'Destination account not found. Provide a valid account number';
     END IF;
 
     -- check source balance >= p_amount
     select balance into source_balance FROM accounts
     WHERE account_id = p_from_account;
     if source_balance<p_amount THEN
-        raise exception "not sufficient balance";
+        raise exception 'Not sufficient balance';
     end if;
 
     --- transaction
@@ -46,7 +46,7 @@ BEGIN
     update accounts
     set  balance = ((select balance FROM accounts WHERE account_id = p_to_account)+p_amount)
     WHERE account_id = p_to_account;
-    commit;
+   
 
     RAISE NOTICE 'Transaction successful';
 
@@ -54,5 +54,5 @@ BEGIN
     WHEN OTHERS THEN
         RAISE NOTICE 'An error occurred: %', SQLERRM;
         
-END;
+END;  
 $$;
